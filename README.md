@@ -1,11 +1,10 @@
 # Desafio em React Native
 
 ## O que esperamos que você faça?
-Somos fãs da Marvel, quem não gosta de Super-heróis?
-A ideia é bem simples, queremos um aplicativo que nos mostre todos os personagens da Marvel além de seus eventos e séries.
+A ideia é bem simples, queremos um aplicativo que nos mostre todos os personagens da Série Rick and Morty além de suas localizações e episódios.
 
 ## Requisitos básicos:
-- Utilizar a API de personsagens da marvel; (https://rickandmortyapi.com/)
+- Utilizar a API de personsagens: (https://rickandmortyapi.com/)
 - O aplicativo deve conter uma listagem paginada em infinite scroll;
 - Uma modal com os detalhes do personagem;
 - Deve ser possível favoritar um personagem; (os favoritos devem ser salvos em base local.)
