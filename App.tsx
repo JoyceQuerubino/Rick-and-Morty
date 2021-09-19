@@ -3,9 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components';
-import theme from './src/global/theme';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 
+import store from './src/redux/store'; 
+import theme from './src/global/theme';
 import {
   useFonts, 
   Roboto_700Bold, 
@@ -13,7 +14,6 @@ import {
 } from '@expo-google-fonts/roboto';
 
 import MainRoute from './src/routes';
-import { Store } from './src/redux/store';
 
 export default function App() {
 
@@ -22,18 +22,18 @@ export default function App() {
     Roboto_400Regular, 
   });
 
-  if(!fontsLoaded){
-    return <AppLoading />
-  }
+  // if(!fontsLoaded){
+  //   return <AppLoading />
+  // }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Provider store={Store}>
-      <NavigationContainer>
-        <StatusBar style="dark"/>
-        <MainRoute />
-      </NavigationContainer>
-      </Provider>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <NavigationContainer>
+          <StatusBar style="dark"/>
+          <MainRoute />
+        </NavigationContainer>
+      </ThemeProvider>
+    </Provider>
   );
 }

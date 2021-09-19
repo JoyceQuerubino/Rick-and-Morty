@@ -1,5 +1,13 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, {useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { getCharacteres } from '../../redux/actions/characteres';
+import { CharactereCard } from '../../components/CharactereCard';  
+
+interface CharactereCardProps {
+  id: string;
+  character: string;
+}
 
 // import exampleSlice from '../../store/reducers/example';
 import { 
@@ -14,10 +22,20 @@ import {
   IconSearch, 
   Subtitle
  } from './styles';
- import { CharactereCard } from '../../components/CharactereCard'; 
+import { Text } from 'react-native';
 
-const Home: React.FC = () => {
+
+export default function Home(){
+
   const dispatch = useDispatch();
+  const characteres = useSelector((state) => state.characteres.characteres);
+  const loading = useSelector((state) => state.characteres.loading);
+  const error = useSelector((state) => state.characteres.error);
+
+  useEffect(() => {
+    dispatch(getCharacteres());
+}, []); 
+
 
   return (
     <Container>
@@ -37,9 +55,16 @@ const Home: React.FC = () => {
           </InputButton>
         </InputContainer>
         <Subtitle>Personagens</Subtitle>
-        <CharactereCard />
+
+        {characteres.loading && <Text>Loading...</Text>}
+
+        {characteres.length > 0 && characteres.map((characteres) => (
+          <CharactereCard character={characteres.character} key={characteres.id}/>
+        ))}
+
+        {characteres.length === 0 && !loading && <Text>Nenhum dado carregado</Text>}
+        {error && !loading && <Text>{error}</Text>}
+
     </Container>
   )
 }
-
-export default Home;
