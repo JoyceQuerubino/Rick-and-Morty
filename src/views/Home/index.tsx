@@ -1,5 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
+
+// import exampleSlice from '../../store/reducers/example';
 import { 
   Container, 
   Header,
@@ -8,10 +10,11 @@ import {
   IconFavorite,
   InputContainer,
   Input,
+  InputButton, 
+  IconSearch, 
+  Subtitle
  } from './styles';
-
-import exampleSlice from '../../redux/reducers/example';
-
+ import { CharactereCard } from '../../components/CharactereCard'; 
 
 const Home: React.FC = () => {
   const dispatch = useDispatch();
@@ -27,9 +30,14 @@ const Home: React.FC = () => {
         <InputContainer>
           <Input 
             placeholder="Digite o nome do personagem"
+            placeholderTextColor="#7A7A7A" 
           />
-          {/* <InputButton></InputButton> */}
+          <InputButton>
+            <IconSearch name="search" />
+          </InputButton>
         </InputContainer>
+        <Subtitle>Personagens</Subtitle>
+        <CharactereCard />
     </Container>
   )
 }

@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
-import { getBottomSpace, getStatusBarHeight } from 'react-native-iphone-x-helper'; 
+import {getStatusBarHeight } from 'react-native-iphone-x-helper'; 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 
@@ -34,7 +34,7 @@ export const FavoriteButton = styled.TouchableOpacity`
 `;
 
 export const IconFavorite = styled(AntDesign)`
- font-size: ${RFValue(18)}px;
+  font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.text};
 `;
 
@@ -42,9 +42,37 @@ export const InputContainer = styled.View`
   width: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 12px;
-  padding: 14px;
   margin-top: 24px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-export const Input = styled.TextInput``;
+export const Input = styled.TextInput`
+   color: ${({ theme }) => theme.colors.text};
+   margin: 0 14px;
+`;
 
+export const InputButton = styled.TouchableOpacity`
+   background-color: ${({ theme }) => theme.colors.primary};
+   width: ${RFValue(42)}px;
+   height: ${RFValue(42)}px;
+   border-top-right-radius: 12px;
+   border-bottom-right-radius: 12px;
+   justify-content: center;
+   align-items: center;
+ 
+`;
+export const IconSearch = styled(FontAwesome)`
+  font-size: ${RFValue(18)}px;
+  color: ${({ theme }) => theme.colors.text};
+`
+
+export const Subtitle = styled.Text`
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${RFValue(18)}px;
+    font-family: ${({ theme }) => theme.fonts.bold};
+    margin-top: 24px;
+    margin-bottom: 18px;
+`; 
