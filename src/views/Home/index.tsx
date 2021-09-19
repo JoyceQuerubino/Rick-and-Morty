@@ -1,6 +1,14 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { Container, Title, ClickMeButton } from './styles';
+import { 
+  Container, 
+  Header,
+  Title,
+  FavoriteButton, 
+  IconFavorite,
+  InputContainer,
+  Input,
+ } from './styles';
 
 import exampleSlice from '../../redux/reducers/example';
 
@@ -10,9 +18,18 @@ const Home: React.FC = () => {
 
   return (
     <Container>
-      <ClickMeButton onPress={() => dispatch(exampleSlice.actions.execute())}>
-        <Title>Click me!</Title>
-      </ClickMeButton>
+      <Header>
+        <Title>Rick and Morty</Title>
+        <FavoriteButton>
+          <IconFavorite name="star"/>
+        </FavoriteButton>
+      </Header>
+        <InputContainer>
+          <Input 
+            placeholder="Digite o nome do personagem"
+          />
+          {/* <InputButton></InputButton> */}
+        </InputContainer>
     </Container>
   )
 }
