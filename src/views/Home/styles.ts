@@ -4,6 +4,7 @@ import { FlatList} from 'react-native';
 import {getStatusBarHeight } from 'react-native-iphone-x-helper'; 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import { CharactereCardProps } from '.'; //importada da propria pasta
 
 export const Container = styled.View`
   flex: 1;
@@ -78,8 +79,6 @@ export const Subtitle = styled.Text`
     margin-bottom: 18px;
 `; 
 
-export const CharacteresList = styled(FlatList)`
-    /* color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(24)}px;
-    background-color: red; */
-`
+export const CharacteresList = styled(
+  FlatList as new () => FlatList<CharactereCardProps>
+)``

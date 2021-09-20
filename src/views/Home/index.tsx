@@ -1,10 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'; 
-
-import { View} from 'react-native';
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
 
-interface CharactereCardProps extends CharacteresProps{}; 
+export interface CharactereCardProps extends CharacteresProps{}; 
 
 // import exampleSlice from '../../store/reducers/example';
 import { 
@@ -20,39 +18,40 @@ import {
   Subtitle, 
   CharacteresList
  } from './styles';
+import { isLoading } from 'expo-font';
 
 
 export default function Home(){
 
   const [ teste, setTeste] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
+  const [loading, setLoading] = useState(false); 
 
   async function fetchCharacters(){
-   axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`)
-    .then((response) => {
-      setTeste(response.data.results)
-        
-        if(page > 1){
-          setTeste(oldValue => [...oldValue, ...response.data.results]);
-        }  else{
-          setTeste(response.data.results);
-        }
-    })
-    .catch(() => {
-      console.log("Error")
-    })
+    try {
+      setLoading(true)
+      const result = await axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`)
+      const resultdata = result.data.results; 
+      console.log(page)
+  
+          if(!resultdata)
+          return console.log('nada') 
+          setTeste([...teste, ...resultdata])
+    } catch(error){
+        console.log(error)
+    } finally{
+      setLoading(false)
+    }
   }
 
-  function handleFetchMore(distance:number){
-    if(distance < 1)
-        return; 
-    setPage(oldValue => oldValue + 1); //vai virar página 2
-    fetchCharacters(); //chama a função que carrega os dados da api
+  function handleFetchMore(){
+    setPage(page + 1); //vai virar página 2
+    // fetchCharacters();
 }
 
   useEffect(() => {
     fetchCharacters(); 
-  }, [])
+  }, [page])
 
   return (
     <Container>
@@ -83,15 +82,13 @@ export default function Home(){
           
           keyExtractor={item => "_" + item.id}
           data={teste}
-          renderItem={({item}) => (
-            <CharactereCard 
-                data={item}
-            />
-          )}
+          renderItem={({item}) => (<CharactereCard 
+            data={item}
+        />)}
           numColumns={2} //mostrar a lista em 2 colunas
           showsVerticalScrollIndicator={false} // remover scroll 
           onEndReachedThreshold={0.1} //quando o usuário chegar a 10% do final da tela
-          onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
+          onEndReached={handleFetchMore}
         />
     </Container>
   )
