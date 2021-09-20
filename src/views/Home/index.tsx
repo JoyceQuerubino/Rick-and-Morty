@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'; 
+import { ActivityIndicator} from 'react-native';
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
 
 export interface CharactereCardProps extends CharacteresProps{}; 
@@ -18,25 +19,27 @@ import {
   Subtitle, 
   CharacteresList
  } from './styles';
-import { isLoading } from 'expo-font';
-
+import { Loading } from '../../components/Loading';
 
 export default function Home(){
 
   const [ characters, setCharacters] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
+  const [loadingApi, setLoadingApi] = useState(true); 
 
   async function fetchCharacters(){
     try {
-      setLoading(true)
+      setLoading(true); 
       const result = await axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`)
       const resultdata = result.data.results; 
-      console.log(page)
   
           if(!resultdata)
-          return console.log('nada') 
+            return setLoadingApi(true)
+
           setCharacters([...characters, ...resultdata])
+          setLoadingApi(false)
+
     } catch(error){
         console.log(error)
     } finally{
@@ -52,6 +55,9 @@ export default function Home(){
   useEffect(() => {
     fetchCharacters(); 
   }, [page])
+
+  if(loadingApi)
+        return <Loading />
 
   return (
     <Container>
@@ -80,15 +86,21 @@ export default function Home(){
             marginBottom: 24
           }}
           
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => String(item.id)}
           data={characters}
-          renderItem={({item}) => (<CharactereCard 
+          renderItem={({item, index}) => (<CharactereCard key={item.id.toString()} 
             data={item}
         />)}
           numColumns={2} //mostrar a lista em 2 colunas
           showsVerticalScrollIndicator={false} // remover scroll 
           onEndReachedThreshold={0.1} //quando o usuário chegar a 10% do final da tela
           onEndReached={handleFetchMore}
+          ListFooterComponent={
+            //aparecer só quando o LoadingMore for verdadeiro
+            loading ?
+            <ActivityIndicator color={'green'}/>
+            : <></> //quando não tiver mais nada, carregue i disfragmente que é nada. 
+        }
         />
     </Container>
   )
