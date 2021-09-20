@@ -23,7 +23,7 @@ import { isLoading } from 'expo-font';
 
 export default function Home(){
 
-  const [ teste, setTeste] = useState<CharactereCardProps[]>([]); 
+  const [ characters, setCharacters] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
 
@@ -36,7 +36,7 @@ export default function Home(){
   
           if(!resultdata)
           return console.log('nada') 
-          setTeste([...teste, ...resultdata])
+          setCharacters([...characters, ...resultdata])
     } catch(error){
         console.log(error)
     } finally{
@@ -76,12 +76,12 @@ export default function Home(){
           columnWrapperStyle={{
             flex: 1,
             justifyContent: 'space-between',
-            paddingHorizontal: 8, 
+            alignItems: 'center', 
             marginBottom: 24
           }}
           
-          keyExtractor={item => "_" + item.id}
-          data={teste}
+          keyExtractor={item => item.id}
+          data={characters}
           renderItem={({item}) => (<CharactereCard 
             data={item}
         />)}
