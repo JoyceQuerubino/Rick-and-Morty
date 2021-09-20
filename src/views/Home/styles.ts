@@ -1,5 +1,6 @@
 import styled from "styled-components/native";
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
+import { FlatList} from 'react-native';
 import {getStatusBarHeight } from 'react-native-iphone-x-helper'; 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -76,3 +77,8 @@ export const Subtitle = styled.Text`
     margin-top: 24px;
     margin-bottom: 18px;
 `; 
+
+export const CharacteresList = styled(FlatList)`
+    color: ${({ theme }) => theme.colors.text};
+    font-size: ${RFValue(24)}px;
+`
