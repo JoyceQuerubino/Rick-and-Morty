@@ -1,9 +1,11 @@
 import React from 'react';
-import { Text, TouchableOpacityProps } from 'react-native';
+import { TouchableOpacityProps } from 'react-native';
 
 import { 
     Container, 
     Image, 
+    Description, 
+    Title
 } from './styles';
 
 export interface CharacteresProps extends TouchableOpacityProps {
@@ -26,8 +28,9 @@ export function CharactereCard({data, ...rest}: Props){
                 resizeMode="cover"
             />
 
-            <Text>{data.name}</Text>
-            <Text>{data.id}</Text>
+            <Description>
+                <Title>{data.name}</Title>
+            </Description>
         </Container>
     )
 }   
