@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import { CharactereCard } from '../../components/CharactereCard';  
 import axios from 'axios'; 
 
-interface CharactereCardProps {
-  id: string;
-  name: string;
-}
+import { View} from 'react-native';
+import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
+
+interface CharactereCardProps extends CharacteresProps{}; 
 
 // import exampleSlice from '../../store/reducers/example';
 import { 
@@ -21,7 +20,6 @@ import {
   Subtitle, 
   CharacteresList
  } from './styles';
-import { Text } from 'react-native';
 
 
 export default function Home(){
@@ -29,7 +27,7 @@ export default function Home(){
   const [ teste, setTeste] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
 
-  async function fetchPlants(){
+  async function fetchCharacters(){
    axios.get(`https://rickandmortyapi.com/api/character/?page=${page}`)
     .then((response) => {
       setTeste(response.data.results)
@@ -43,19 +41,17 @@ export default function Home(){
     .catch(() => {
       console.log("Error")
     })
-
-   
   }
 
   function handleFetchMore(distance:number){
     if(distance < 1)
         return; 
     setPage(oldValue => oldValue + 1); //vai virar página 2
-    fetchPlants(); //chama a função que carrega os dados da api
+    fetchCharacters(); //chama a função que carrega os dados da api
 }
 
   useEffect(() => {
-    fetchPlants(); 
+    fetchCharacters(); 
   }, [])
 
   return (
@@ -78,15 +74,22 @@ export default function Home(){
         <Subtitle>Personagens</Subtitle>
 
         <CharacteresList
-          data={teste}
-          // keyExtractor={(item) => String(item.id)}
-          renderItem={({item}) => {
-            return(
-              <>
-                <Text key={item.id} style={[{color: '#FFF'}, {fontSize: 24}]}>{item.name}</Text>
-              </>
-              )
+          columnWrapperStyle={{
+            flex: 1,
+            justifyContent: 'space-between',
+            paddingHorizontal: 8, 
+            marginBottom: 24
           }}
+          
+          keyExtractor={item => "_" + item.id}
+          data={teste}
+          renderItem={({item}) => (
+            <CharactereCard 
+                data={item}
+            />
+          )}
+          numColumns={2} //mostrar a lista em 2 colunas
+          showsVerticalScrollIndicator={false} // remover scroll 
           onEndReachedThreshold={0.1} //quando o usuário chegar a 10% do final da tela
           onEndReached={({ distanceFromEnd }) => handleFetchMore(distanceFromEnd)}
         />

@@ -3,19 +3,31 @@ import { Text, TouchableOpacityProps } from 'react-native';
 
 import { 
     Container, 
+    Image, 
 } from './styles';
 
-interface Props extends TouchableOpacityProps {
-    id: string; 
-    character: string;
+export interface CharacteresProps extends TouchableOpacityProps {
+    id: string,
+    name: string,
+    image: string,
 }
 
-export function CharactereCard({character, ...rest}: Props){
+interface Props {
+    data: CharacteresProps
+}
+
+export function CharactereCard({data, ...rest}: Props){
     return(
         <Container
             {...rest}
         >
-            <Text>{character}</Text>
+            <Image
+                source={{uri: data.image}}
+                resizeMode="cover"
+            />
+
+            <Text>{data.name}</Text>
+            <Text>{data.id}</Text>
         </Container>
     )
 }   

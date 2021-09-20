@@ -79,6 +79,7 @@ export const Subtitle = styled.Text`
 `; 
 
 export const CharacteresList = styled(FlatList)`
-    color: ${({ theme }) => theme.colors.text};
+    /* color: ${({ theme }) => theme.colors.text};
     font-size: ${RFValue(24)}px;
+    background-color: red; */
 `
