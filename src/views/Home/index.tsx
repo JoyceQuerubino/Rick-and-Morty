@@ -30,8 +30,6 @@ export default function Home(){
   const [loading, setLoading] = useState(false); 
   const [loadingApi, setLoadingApi] = useState(true); 
 
-  const [startfilter, setStartFilter] = useState(false); 
-
   const [ searchName, setSearchName] = useState(''); 
 
   function handleStart(pagCharacters: CharactereCardProps){
@@ -58,41 +56,24 @@ export default function Home(){
   }
 
   function handleFetchMore(){
-    if(startfilter){
-      handleSearchName(); 
       setPage(page + 1); 
-    }
-    else{
-      setPage(page + 1); 
-    }
   }
 
   function handleInputChange(value: string){
     setSearchName(value)
   }
 
-  function filter(){
-    const filtered = characters.filter(character => 
-      character.name.includes(searchName)
-    );
-    setCharacters(filtered)
+  function filterResultByCharName(){
+    if(searchName){
+      return characters.filter(character => character.name.includes(searchName));
+    }
+    return characters
   }
 
-  function handleSearchName(){
-    if(!searchName)
-      fetchCharacters(); 
-
-    setStartFilter(true); 
-    filter(); 
-  }
   
   useEffect(() => {
       fetchCharacters(); 
   }, [page])
-
-  useEffect(() => {
-    filter(); 
-}, [page])
 
   if(loadingApi)
         return <Loading />
@@ -113,7 +94,6 @@ export default function Home(){
             onChangeText={handleInputChange}
           />
           <InputButton
-            onPress={handleSearchName}
           >
             <IconSearch name="search" />
           </InputButton>
@@ -128,7 +108,10 @@ export default function Home(){
             marginBottom: 24
           }}
           keyExtractor={(item) => String(item.id)}
-          data={characters}
+          data={filterResultByCharName()}
+          initialNumToRender={4}
+          maxToRenderPerBatch={8}
+          updateCellsBatchingPeriod={50}
           renderItem={({item, index}) => (
               <CharactereCard 
                 key={item.id.toString()} 
