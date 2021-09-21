@@ -46,14 +46,14 @@ export const Description = styled.View`
   width: 100%;
   height: 100%;
   margin-top: 8px;
+  padding: 32px 0;
 `
 
 export const Strip = styled.View`
     background-color: ${({ theme }) => theme.colors.primary};
-    margin-top: 48px;
-    width: ${RFValue(188)}px;
+    width: ${RFValue(216)}px;
     padding: 8px 16px;
-    margin-bottom: 16px;
+    margin: 16px 0;
 `; 
 
 export const SubTitle = styled.Text`
@@ -64,8 +64,18 @@ export const SubTitle = styled.Text`
 `;  
 
 export const TopicsContainer = styled.View`
-  
+  flex-direction: row;
+  padding: 0 42px;
 `;  
 
-export const Topic = styled.Text``; 
-export const Text = styled.Text``;  
+export const Topic = styled.Text`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: ${RFValue(14)}px;
+  font-family: ${({ theme }) => theme.fonts.bold};
+  /* margin-bottom: 8px; */
+`; 
+export const Text = styled.Text`
+  color: ${({ theme }) => theme.colors.primary};
+  font-size: ${RFValue(14)}px;
+  font-family: ${({ theme }) => theme.fonts.bold};
+`;  

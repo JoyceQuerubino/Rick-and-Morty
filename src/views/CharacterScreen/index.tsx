@@ -19,10 +19,6 @@ import {
 } from './styles';
 import { BtnReturn } from '../../components/BtnReturn';
 
-
-
-
-
 interface Params {
     pagCharacters: { 
         id: string,
@@ -46,62 +42,104 @@ export default function CharacterScreen(){
     const [eps, setEps] = useState<Params[]>([]); 
     const [teste, setTeste] = useState({pagCharacters}); 
 
+   
 
-    // async function fetchEps(){
-    //     try {
-    //       const result = await axios.get(`${pagCharacters.episode}`)
-    //       const resultdata = result.data.results; 
-    //       console.log(resultdata)
-      
-    //           if(!resultdata)
-    //             return console.log('nada')
-    
-    //             setEps([...eps, ...resultdata])
-    
-    //     } catch(error){
-    //         console.log(error)
-    //     }
-    // }
+    const [arrayFavorites, setArrayFavorites] = useState<String[]>([]); 
+
+    function handleEpisodes(){
+        const arreyEpisodes = pagCharacters.episode
+        
+        const novo = arreyEpisodes.map(getEpisodeNumberFromUr)
+        // console.log(novo);
+
+        fetchEps(); 
+
+        async function fetchEps(){
+            try {
+              const result = await axios.get(`https://rickandmortyapi.com/api/episode/${novo}`)
+                //   const resultdata = result.data.results; 
+                // console.log('OLHA APARTIR DAQUI')
+                // console.log(result)
+          
+                //   if(!resultdata)
+                //     return console.log('nada')
+        
+                //     setEps([...eps, ...resultdata])
+        
+            } catch(error){
+                console.log(error)
+            }
+        }
+
+    }
+    function getEpisodeNumberFromUr(fullUrl: string){
+        //nesse caso se a url mudar eu não preciso me preocupar
+        const ep = fullUrl.replace('https://rickandmortyapi.com/api/episode/', '') 
+        return ep
+    }
+
+   
 
     async function getData(){
-        const response = await AsyncStorage.getItem('@rickmorty:favorities'); 
+        const response = await AsyncStorage.getItem('@rickmorty:id'); 
         if(response !== null){
             console.log('Tem dado')
-            setTeste(JSON.parse(response)); 
-            console.log(teste)
-
+            // console.log(`o dado é ${response}`)
         }
     }
 
-    async function setData(){
-        await AsyncStorage.setItem('@rickmorty:favorities', JSON.stringify(teste), (err)=> {
+    async function setIDCharacterAsyncStorage(arrayFavorites: String[]){
+        await AsyncStorage.setItem('@rickmorty:id', JSON.stringify(arrayFavorites), (err)=> {
             console.log("Adicionado com sucesso");
+            console.log(arrayFavorites);
             if(err){
-                console.log("an error");
+                console.log("Ocorreu um erro");
                 throw err;
             }
         })
     }
 
-    async function removeData(){
-        await AsyncStorage.removeItem('@rickmorty:favorities')
+    async function removeData(arrayFavorites: String[]){
+        const id = teste.pagCharacters.id
+        arrayFavorites.splice(arrayFavorites.indexOf(id)); 
         console.log("Removido");
+        console.log(arrayFavorites)
+
+        await AsyncStorage.removeItem('@rickmorty:id')
+       
     }
 
     
-    async function handleFavoriteCharacter(){ 
+    function handleFavoriteCharacter(){ 
         if(!teste.pagCharacters.favorities){
             teste.pagCharacters.favorities = true
-            setData(); 
+            const idCharacter = teste.pagCharacters.id
+
+            setArrayFavorites(oldSkill => [...oldSkill, idCharacter])
+            
+            setIDCharacterAsyncStorage(arrayFavorites);
+
         } else {
             teste.pagCharacters.favorities = false
-            removeData();
+            const idCharacter = teste.pagCharacters.id
+            setArrayFavorites(arrayFavorites.splice(arrayFavorites.indexOf(idCharacter), 1))
+            console.log("Removido");
+            console.log(arrayFavorites); 
         }
     }
 
+    // useEffect(() => {
+    //     getData();
+    // }, [])
+
+    // useEffect(() => {
+    //     arrayFavorites;
+    // }, [])
+
     useEffect(() => {
-        getData();
+        handleEpisodes(); 
     }, [])
+
 
     return(
         <Container>

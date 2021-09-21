@@ -12,6 +12,11 @@ export interface CharacteresProps  {
     id: string,
     name: string,
     image: string,
+    species: string,
+    location: {
+        name: string,
+    }, 
+    episode: []
 }
 
 interface Props extends TouchableOpacityProps {

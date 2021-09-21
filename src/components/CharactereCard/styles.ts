@@ -3,18 +3,18 @@ import { TouchableOpacity} from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
 
 export const Container = styled(TouchableOpacity)`
-    width: ${RFPercentage(24)}px;
+    width: ${RFPercentage(22)}px;
     background-color: ${({ theme }) => theme.colors.secondary};
     align-items: baseline; 
     border-radius: 8px;
+    border: 2px solid ${({ theme }) => theme.colors.primary};
 `; 
 
 export const Image = styled.Image`
-    width: ${RFPercentage(24)}px;
+    width: ${RFPercentage(21.4)}px;
     height: ${RFValue(112)}px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
-    border: 2px solid ${({ theme }) => theme.colors.primary};
 `; 
 
 export const Description = styled.View`
