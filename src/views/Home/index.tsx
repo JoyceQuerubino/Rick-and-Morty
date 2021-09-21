@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'; 
-import { ActivityIndicator} from 'react-native';
+import { ActivityIndicator, Alert} from 'react-native';
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
 
 export interface CharactereCardProps extends CharacteresProps{}; 
@@ -23,10 +23,12 @@ import { Loading } from '../../components/Loading';
 
 export default function Home(){
 
-  const [ characters, setCharacters] = useState<CharactereCardProps[]>([]); 
+  const [characters, setCharacters] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
   const [loadingApi, setLoadingApi] = useState(true); 
+
+  const [ searchName, setSearchName] = useState(''); 
 
   async function fetchCharacters(){
     try {
@@ -47,14 +49,50 @@ export default function Home(){
     }
   }
 
+  async function filterCharacteres(){
+    try {
+      const filtered = await axios.get(`https://rickandmortyapi.com/api/character/`)
+      const filteredData = filtered.data.results; 
+
+      setCharacters(filteredData)
+
+    } catch(error){
+      console.log(error)
+    }
+  }
+
   function handleFetchMore(){
-    setPage(page + 1); //vai virar página 2
-    // fetchCharacters();
-}
+    setPage(page + 1);
+  }
+
+  function handleInputChange(value: string){
+    setSearchName(value)
+  }
+
+  function filter(){
+    
+    const filtered = characters.filter(character => 
+      character.name.includes(searchName)
+    );
+    setCharacters(filtered)
+  }
+
+  function handleSearchName(){
+    if(!searchName)
+      return Alert.alert('Você precisa digitar o nome do personagem! 😥');
+
+      // console.log(searchName); 
+      filter(); 
+    }
 
   useEffect(() => {
-    fetchCharacters(); 
+      fetchCharacters(); 
   }, [page])
+
+  useEffect(() => {
+    filterCharacteres(); 
+    console.log('mudou')
+  }, [])
 
   if(loadingApi)
         return <Loading />
@@ -69,10 +107,14 @@ export default function Home(){
       </Header>
         <InputContainer>
           <Input 
+            value={searchName}
             placeholder="Digite o nome do personagem"
             placeholderTextColor="#7A7A7A" 
+            onChangeText={handleInputChange}
           />
-          <InputButton>
+          <InputButton
+            onPress={handleSearchName}
+          >
             <IconSearch name="search" />
           </InputButton>
         </InputContainer>
