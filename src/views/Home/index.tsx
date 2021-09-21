@@ -1,11 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios'; 
-import { ActivityIndicator, Alert} from 'react-native';
+import { ActivityIndicator, Alert, View} from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
-
-export interface CharactereCardProps extends CharacteresProps{}; 
-
-// import exampleSlice from '../../store/reducers/example';
 import { 
   Container, 
   Header,
@@ -21,7 +19,11 @@ import {
  } from './styles';
 import { Loading } from '../../components/Loading';
 
+export interface CharactereCardProps extends CharacteresProps{}; 
+
 export default function Home(){
+
+  const nevigation = useNavigation(); 
 
   const [characters, setCharacters] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
@@ -29,6 +31,10 @@ export default function Home(){
   const [loadingApi, setLoadingApi] = useState(true); 
 
   const [ searchName, setSearchName] = useState(''); 
+
+  function handleStart(pagCharacters: CharactereCardProps){
+    nevigation.navigate('Personagens', {pagCharacters})
+  }
 
   async function fetchCharacters(){
     try {
@@ -70,7 +76,6 @@ export default function Home(){
   }
 
   function filter(){
-    
     const filtered = characters.filter(character => 
       character.name.includes(searchName)
     );
@@ -83,15 +88,14 @@ export default function Home(){
 
       // console.log(searchName); 
       filter(); 
-    }
-
+  }
+  
   useEffect(() => {
       fetchCharacters(); 
   }, [page])
 
   useEffect(() => {
     filterCharacteres(); 
-    console.log('mudou')
   }, [])
 
   if(loadingApi)
@@ -127,21 +131,23 @@ export default function Home(){
             alignItems: 'center', 
             marginBottom: 24
           }}
-          
           keyExtractor={(item) => String(item.id)}
           data={characters}
-          renderItem={({item, index}) => (<CharactereCard key={item.id.toString()} 
-            data={item}
-        />)}
-          numColumns={2} //mostrar a lista em 2 colunas
-          showsVerticalScrollIndicator={false} // remover scroll 
-          onEndReachedThreshold={0.1} //quando o usuário chegar a 10% do final da tela
+          renderItem={({item, index}) => (
+              <CharactereCard 
+                key={item.id.toString()} 
+                data={item}
+                onPress={() => handleStart(item)}
+              />
+            )}
+          numColumns={2} 
+          showsVerticalScrollIndicator={false}
+          onEndReachedThreshold={0.1}
           onEndReached={handleFetchMore}
           ListFooterComponent={
-            //aparecer só quando o LoadingMore for verdadeiro
             loading ?
             <ActivityIndicator color={'green'}/>
-            : <></> //quando não tiver mais nada, carregue i disfragmente que é nada. 
+            : <></>  
         }
         />
     </Container>

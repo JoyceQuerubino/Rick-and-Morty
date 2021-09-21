@@ -9,7 +9,7 @@ import { CharactereCardProps } from '.'; //importada da propria pasta
 export const Container = styled.View`
   flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 31px 24px 0px 24px;
+  padding: 0px 24px;
 `;
 
 export const Header = styled.View`
