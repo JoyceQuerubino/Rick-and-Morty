@@ -30,7 +30,7 @@ export default function Home(){
   const [loading, setLoading] = useState(false); 
   const [loadingApi, setLoadingApi] = useState(true); 
 
-  const [startfilter, setStartFilter] = useState(true); 
+  const [startfilter, setStartFilter] = useState(false); 
 
   const [ searchName, setSearchName] = useState(''); 
 
@@ -57,20 +57,14 @@ export default function Home(){
     }
   }
 
-  async function filterCharacteres(){
-    try {
-      const filtered = await axios.get(`https://rickandmortyapi.com/api/character/`)
-      const filteredData = filtered.data.results; 
-
-      setCharacters(filteredData)
-
-    } catch(error){
-      console.log(error)
-    }
-  }
-
   function handleFetchMore(){
-    setPage(page + 1);
+    if(startfilter){
+      handleSearchName(); 
+      setPage(page + 1); 
+    }
+    else{
+      setPage(page + 1); 
+    }
   }
 
   function handleInputChange(value: string){
@@ -86,10 +80,10 @@ export default function Home(){
 
   function handleSearchName(){
     if(!searchName)
-      return Alert.alert('Você precisa digitar o nome do personagem! 😥');
+      fetchCharacters(); 
 
-      // console.log(searchName); 
-      filter(); 
+    setStartFilter(true); 
+    filter(); 
   }
   
   useEffect(() => {
@@ -97,8 +91,8 @@ export default function Home(){
   }, [page])
 
   useEffect(() => {
-    filterCharacteres(); 
-  }, [])
+    filter(); 
+}, [page])
 
   if(loadingApi)
         return <Loading />
@@ -126,65 +120,32 @@ export default function Home(){
         </InputContainer>
         <Subtitle>Personagens</Subtitle>
 
-        {
-          startfilter ? 
-          (
-            <CharacteresList
-            columnWrapperStyle={{
-              flex: 1,
-              justifyContent: 'space-between',
-              alignItems: 'center', 
-              marginBottom: 24
-            }}
-            keyExtractor={(item) => String(item.id)}
-            data={characters}
-            renderItem={({item, index}) => (
-                <CharactereCard 
-                  key={item.id.toString()} 
-                  data={item}
-                  onPress={() => handleStart(item)}
-                />
-              )}
-            numColumns={2} 
-            showsVerticalScrollIndicator={false}
-            // onEndReachedThreshold={0.1}
-            // onEndReached={handleFetchMore}
-            ListFooterComponent={
-              loading ?
-              <ActivityIndicator color={'green'}/>
-              : <></>  
-          }
-          />
-          ) : 
-          (
-              <CharacteresList
-                columnWrapperStyle={{
-                  flex: 1,
-                  justifyContent: 'space-between',
-                  alignItems: 'center', 
-                  marginBottom: 24
-                }}
-                keyExtractor={(item) => String(item.id)}
-                data={characters}
-                renderItem={({item, index}) => (
-                    <CharactereCard 
-                      key={item.id.toString()} 
-                      data={item}
-                      onPress={() => handleStart(item)}
-                    />
-                  )}
-                numColumns={2} 
-                showsVerticalScrollIndicator={false}
-                onEndReachedThreshold={0.1}
-                onEndReached={handleFetchMore}
-                ListFooterComponent={
-                  loading ?
-                  <ActivityIndicator color={'green'}/>
-                  : <></>  
-                }
+        <CharacteresList
+          columnWrapperStyle={{
+            flex: 1,
+            justifyContent: 'space-between',
+            alignItems: 'center', 
+            marginBottom: 24
+          }}
+          keyExtractor={(item) => String(item.id)}
+          data={characters}
+          renderItem={({item, index}) => (
+              <CharactereCard 
+                key={item.id.toString()} 
+                data={item}
+                onPress={() => handleStart(item)}
               />
-          )
-        }
+            )}
+          numColumns={2} 
+          showsVerticalScrollIndicator={false}
+          onEndReachedThreshold={0.1}
+          onEndReached={handleFetchMore}
+          ListFooterComponent={
+            loading ?
+            <ActivityIndicator color={'green'}/>
+            : <></>  
+          }
+      />
     </Container>
   )
 }
