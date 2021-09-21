@@ -8,13 +8,13 @@ import {
     Title
 } from './styles';
 
-export interface CharacteresProps extends TouchableOpacityProps {
+export interface CharacteresProps  {
     id: string,
     name: string,
     image: string,
 }
 
-interface Props {
+interface Props extends TouchableOpacityProps {
     data: CharacteresProps
 }
 
