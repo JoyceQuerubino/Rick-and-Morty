@@ -30,6 +30,8 @@ export default function Home(){
   const [loading, setLoading] = useState(false); 
   const [loadingApi, setLoadingApi] = useState(true); 
 
+  const [startfilter, setStartFilter] = useState(true); 
+
   const [ searchName, setSearchName] = useState(''); 
 
   function handleStart(pagCharacters: CharactereCardProps){
@@ -124,32 +126,65 @@ export default function Home(){
         </InputContainer>
         <Subtitle>Personagens</Subtitle>
 
-        <CharacteresList
-          columnWrapperStyle={{
-            flex: 1,
-            justifyContent: 'space-between',
-            alignItems: 'center', 
-            marginBottom: 24
-          }}
-          keyExtractor={(item) => String(item.id)}
-          data={characters}
-          renderItem={({item, index}) => (
-              <CharactereCard 
-                key={item.id.toString()} 
-                data={item}
-                onPress={() => handleStart(item)}
+        {
+          startfilter ? 
+          (
+            <CharacteresList
+            columnWrapperStyle={{
+              flex: 1,
+              justifyContent: 'space-between',
+              alignItems: 'center', 
+              marginBottom: 24
+            }}
+            keyExtractor={(item) => String(item.id)}
+            data={characters}
+            renderItem={({item, index}) => (
+                <CharactereCard 
+                  key={item.id.toString()} 
+                  data={item}
+                  onPress={() => handleStart(item)}
+                />
+              )}
+            numColumns={2} 
+            showsVerticalScrollIndicator={false}
+            // onEndReachedThreshold={0.1}
+            // onEndReached={handleFetchMore}
+            ListFooterComponent={
+              loading ?
+              <ActivityIndicator color={'green'}/>
+              : <></>  
+          }
+          />
+          ) : 
+          (
+              <CharacteresList
+                columnWrapperStyle={{
+                  flex: 1,
+                  justifyContent: 'space-between',
+                  alignItems: 'center', 
+                  marginBottom: 24
+                }}
+                keyExtractor={(item) => String(item.id)}
+                data={characters}
+                renderItem={({item, index}) => (
+                    <CharactereCard 
+                      key={item.id.toString()} 
+                      data={item}
+                      onPress={() => handleStart(item)}
+                    />
+                  )}
+                numColumns={2} 
+                showsVerticalScrollIndicator={false}
+                onEndReachedThreshold={0.1}
+                onEndReached={handleFetchMore}
+                ListFooterComponent={
+                  loading ?
+                  <ActivityIndicator color={'green'}/>
+                  : <></>  
+                }
               />
-            )}
-          numColumns={2} 
-          showsVerticalScrollIndicator={false}
-          onEndReachedThreshold={0.1}
-          onEndReached={handleFetchMore}
-          ListFooterComponent={
-            loading ?
-            <ActivityIndicator color={'green'}/>
-            : <></>  
+          )
         }
-        />
     </Container>
   )
 }
