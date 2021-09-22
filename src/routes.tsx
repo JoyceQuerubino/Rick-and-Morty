@@ -2,7 +2,8 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import HomeScreen from './views/Home';
-import CharacterScreen from './views/CharacterScreen';
+import CharacterScreen from './views/Character';
+import FavoritesScreen from './views/Favorites'; 
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,8 @@ const MainRoute = () => {
       }}
     >
       <Stack.Screen name="Home" component={HomeScreen} />
-      <Stack.Screen name="Personagens" component={CharacterScreen} />
+      <Stack.Screen name="Characters" component={CharacterScreen} />
+      <Stack.Screen name="Favorites" component={FavoritesScreen} />
     </Stack.Navigator>
   );
 }
