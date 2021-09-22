@@ -3,20 +3,24 @@ import { useRoute } from '@react-navigation/core'; //para recuperar valores pass
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import axios from 'axios'; 
 
+import {ScrollView} from 'react-native'; 
+
 import { 
-    Container, 
-    Content,
-    Title, 
-    Image, 
-    Description,
-    FavoriteContainer,
     BtnFavorite,
+    Container, 
+    Description,
+    EpisodeContainer, 
+    FavoriteContainer,
+    Header,
     IconFavorite, 
-    Strip, 
+    Image, 
+    Section,
     SubTitle, 
-    TopicsContainer, 
-    Topic,
     Text, 
+    Title, 
+    Topic,
+    TopicEpisode,
+    TopicsContainer 
 } from './styles';
 import { BtnReturn } from '../../components/BtnReturn';
 
@@ -35,73 +39,76 @@ interface Params {
     }
 }
 
+interface EpisodeType {
+    id: string, 
+    name: string, 
+    episode: string
+}
+
 export default function Character(){
 
     //recuperar o objeto 'pagCharacters', que é passado pela chamada da navegação da paǵina
     const route = useRoute(); 
     const { pagCharacters} = route.params as Params; 
+    
     const [btnFavoriteStatus, setBtnFavoriteStatus] = useState(false); 
-
-    const [eps, setEps] = useState<Params[]>([]); 
-    // const [teste, setTeste] = useState({pagCharacters}); 
+    const [episode, setEpisode] = useState<EpisodeType[]>([]); 
 
     function handleEpisodes(){
-        const arreyEpisodes = pagCharacters.episode
         
-        const novo = arreyEpisodes.map(getEpisodeNumberFromUr)
-        // console.log(novo);
+        const arreyEpisodes = pagCharacters.episode
+        const filteredUrl = arreyEpisodes.map(getEpisodeNumberFromUr)
 
-        fetchEps(); 
+        fetchEpisodes(); 
 
-        async function fetchEps(){
+        async function fetchEpisodes(){
             try {
-              const result = await axios.get(`https://rickandmortyapi.com/api/episode/${novo}`)
+              const result = await axios.get(`https://rickandmortyapi.com/api/episode/${filteredUrl}`)
                 const resultdata = result.data; 
-                console.log('OLHA APARTIR DAQUI')
-                console.log(resultdata.id) //Duvida aqui 
           
                   if(!resultdata)
                     return console.log('Requisição concluída')
         
-                    setEps([...eps, ...resultdata])
+                    // Quando tiver apenas 1 episódio, precisa mudar a forma de receber os dados
+                    if(resultdata.length > 1)
+                        setEpisode([...episode, ...resultdata])
+                    else 
+                        setEpisode(oldState => [ ...oldState, resultdata ])
         
             } catch(error){
                 console.log(error)
             }
         }
-
     }
+
     function getEpisodeNumberFromUr(fullUrl: string){
-        const ep = fullUrl.replace('https://rickandmortyapi.com/api/episode/', '') 
-        return ep
+        const episodeNumber = fullUrl.replace('https://rickandmortyapi.com/api/episode/', '') 
+        return episodeNumber
     }
 
     function handleFavoriteCharacter(){ 
         setBtnFavoriteStatus(!btnFavoriteStatus)
 
-        const valor = pagCharacters.id; 
-        const valorConvertido = valor.toString();
-        console.log(valorConvertido)
+        const characterId = pagCharacters.id; 
+        const convertedIdToString = characterId.toString();
 
-        async function setIDCharacterAsyncStorage(){
-            await AsyncStorage.setItem('@rickmorty:id', valorConvertido); 
+        async function setCharacterIdForAsyncStorage(){
+            await AsyncStorage.setItem('@rickmorty:id', convertedIdToString); 
             console.log('Valor salvo')
         }
-    
-        setIDCharacterAsyncStorage(); 
+        setCharacterIdForAsyncStorage(); 
     }
 
     useEffect(() => {
         handleEpisodes(); 
     }, [])
 
-
     return(
         <Container>
             <BtnReturn 
                 title='Voltar'
             />
-            <Content>
+            <Header>
                 <Image
                     source={{uri: pagCharacters.image}}
                     resizeMode="cover"
@@ -119,27 +126,36 @@ export default function Character(){
                         
                     </BtnFavorite>
                 </FavoriteContainer>
-            </Content>
-
+            </Header>
             <Description>
-                <Strip>
+                <Section>
                     <SubTitle>About the character</SubTitle>
-                </Strip>
-                <TopicsContainer>
-                    <Topic>Status: </Topic>
-                    <Text>{pagCharacters.status}</Text>
-                </TopicsContainer>
-                <TopicsContainer>
-                    <Topic>Location: </Topic>
-                    <Text>{pagCharacters.location.name}</Text>
-                </TopicsContainer>
-                <TopicsContainer>
-                    <Topic>Species: </Topic>
-                    <Text>{pagCharacters.species}</Text>
-                </TopicsContainer>
-                <Strip>
+                    <TopicsContainer>
+                        <Topic>Status: </Topic>
+                        <Text>{pagCharacters.status}</Text>
+                    </TopicsContainer>
+                    <TopicsContainer>
+                        <Topic>Location: </Topic>
+                        <Text>{pagCharacters.location.name}</Text>
+                    </TopicsContainer>
+                    <TopicsContainer>
+                        <Topic>Species: </Topic>
+                        <Text>{pagCharacters.species}</Text>
+                    </TopicsContainer>
+                </Section>
+                <Section>
                     <SubTitle>Episodes list</SubTitle>
-                </Strip>
+                    <ScrollView showsVerticalScrollIndicator={true} nestedScrollEnabled={true}>
+                        {
+                            episode.map( (item: EpisodeType) => (
+                                <EpisodeContainer key={item.id}>
+                                    <TopicEpisode>{item.name}</TopicEpisode>  
+                                    <Text>{item.episode}</Text>  
+                                </EpisodeContainer>
+                            ))
+                        }
+                    </ScrollView>
+                </Section>
             </Description>
         </Container>
     )
