@@ -1,38 +1,38 @@
 import styled from "styled-components/native";
 import { TouchableOpacity, FlatList } from 'react-native';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
+import { RFValue } from 'react-native-responsive-fontsize'; 
 import {getStatusBarHeight } from 'react-native-iphone-x-helper'; 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import { CharactereCardProps } from '.'; //importada da propria pasta
 
 export const Container = styled.View`
-  flex: 1;
   background-color: ${({ theme }) => theme.colors.background};
+  flex: 1;
   padding: 0px 24px;
 `;
 
 export const Header = styled.View`
-  width: 100%;
-  margin-top: ${getStatusBarHeight() + RFValue(8)}px;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: ${getStatusBarHeight() + RFValue(8)}px;
+  width: 100%;
 ` 
 export const Title = styled.Text`
-    max-width: ${RFValue(150)}px;
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(36)}px;
-    font-family: ${({ theme }) => theme.fonts.bold};
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.bold};
+  font-size: ${RFValue(36)}px;
+  max-width: ${RFValue(150)}px;
 `;
 
 export const FavoriteButton = styled(TouchableOpacity)`
-  width: ${RFValue(39)}px;
-  height: ${RFValue(39)}px;
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 40px;
-  margin-top: 20px;
+  height: ${RFValue(39)}px;
   justify-content: center;
-  align-items: center;
+  margin-top: 20px;
+  width: ${RFValue(39)}px;
 `;
 
 export const IconFavorite = styled(AntDesign)`
@@ -41,42 +41,42 @@ export const IconFavorite = styled(AntDesign)`
 `;
 
 export const InputContainer = styled.View`
-  width: 100%;
+  align-items: center;
   background-color: ${({ theme }) => theme.colors.secondary};
   border-radius: 12px;
-  margin-top: 24px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  margin-top: 24px;
+  width: 100%;
 `;
 
 export const Input = styled.TextInput`
-   color: ${({ theme }) => theme.colors.text};
-   margin: 0 14px;
+  color: ${({ theme }) => theme.colors.text};
+  margin: 0 14px;
 `;
 
 export const InputButton = styled.TouchableOpacity`
-   background-color: ${({ theme }) => theme.colors.primary};
-   width: ${RFValue(42)}px;
-   height: ${RFValue(42)}px;
-   border-top-right-radius: 12px;
-   border-bottom-right-radius: 12px;
-   justify-content: center;
-   align-items: center;
+  align-items: center;
+  background-color: ${({ theme }) => theme.colors.primary};
+  border-bottom-right-radius: 12px;
+  border-top-right-radius: 12px;
+  height: ${RFValue(42)}px;
+  justify-content: center;
+  width: ${RFValue(42)}px;
  
 `;
 export const IconSearch = styled(FontAwesome)`
-  font-size: ${RFValue(18)}px;
   color: ${({ theme }) => theme.colors.text};
+  font-size: ${RFValue(18)}px;
 `
 
 export const Subtitle = styled.Text`
-    color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(18)}px;
-    font-family: ${({ theme }) => theme.fonts.bold};
-    margin-top: 24px;
-    margin-bottom: 18px;
+  color: ${({ theme }) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.bold};
+  font-size: ${RFValue(18)}px;
+  margin-bottom: 18px;
+  margin-top: 24px;
 `; 
 
 export const CharacteresList = styled(
