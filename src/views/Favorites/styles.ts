@@ -1,19 +1,17 @@
 import styled from "styled-components/native";
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
-import { TouchableOpacity, FlatList } from 'react-native';
-import {getStatusBarHeight } from 'react-native-iphone-x-helper'; 
+import { RFValue } from 'react-native-responsive-fontsize'; 
+import { FlatList } from 'react-native';
 import { CharactereCardProps } from '.'; //importada da propria pasta
 
 export const Container = styled.View`
-  flex: 1;
-  background-color: ${({ theme }) => theme.colors.background};
-
+    background-color: ${({ theme }) => theme.colors.background};
+    flex: 1;
 `;
 
 export const Title = styled.Text`
     color: ${({ theme }) => theme.colors.text};
-    font-size: ${RFValue(32)}px;
     font-family: ${({ theme }) => theme.fonts.bold};
+    font-size: ${RFValue(32)}px;
     margin-bottom: 24px;
 `;
 
