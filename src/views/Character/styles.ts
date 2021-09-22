@@ -72,6 +72,8 @@ export const Section = styled.View`
   width: 100%;
 `; 
 
+export const EpisodesList = styled.ScrollView``;
+
 export const SubTitle = styled.Text`
   color: ${({ theme }) => theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.bold};

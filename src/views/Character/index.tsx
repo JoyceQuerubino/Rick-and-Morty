@@ -3,13 +3,12 @@ import { useRoute } from '@react-navigation/core'; //para recuperar valores pass
 import AsyncStorage from '@react-native-async-storage/async-storage'; 
 import axios from 'axios'; 
 
-import {ScrollView} from 'react-native'; 
-
 import { 
     BtnFavorite,
     Container, 
     Description,
     EpisodeContainer, 
+    EpisodesList,
     FavoriteContainer,
     Header,
     IconFavorite, 
@@ -20,7 +19,7 @@ import {
     Title, 
     Topic,
     TopicEpisode,
-    TopicsContainer 
+    TopicsContainer, 
 } from './styles';
 import { BtnReturn } from '../../components/BtnReturn';
 
@@ -145,7 +144,10 @@ export default function Character(){
                 </Section>
                 <Section>
                     <SubTitle>Episodes list</SubTitle>
-                    <ScrollView showsVerticalScrollIndicator={true} nestedScrollEnabled={true}>
+                    <EpisodesList 
+                        showsVerticalScrollIndicator={true} 
+                        nestedScrollEnabled={true}
+                    >
                         {
                             episode.map( (item: EpisodeType) => (
                                 <EpisodeContainer key={item.id}>
@@ -154,7 +156,7 @@ export default function Character(){
                                 </EpisodeContainer>
                             ))
                         }
-                    </ScrollView>
+                    </EpisodesList>
                 </Section>
             </Description>
         </Container>
