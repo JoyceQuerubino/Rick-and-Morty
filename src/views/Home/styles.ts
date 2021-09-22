@@ -1,6 +1,6 @@
 import styled from "styled-components/native";
+import { TouchableOpacity, FlatList } from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
-import { FlatList} from 'react-native';
 import {getStatusBarHeight } from 'react-native-iphone-x-helper'; 
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -25,7 +25,7 @@ export const Title = styled.Text`
     font-family: ${({ theme }) => theme.fonts.bold};
 `;
 
-export const FavoriteButton = styled.TouchableOpacity`
+export const FavoriteButton = styled(TouchableOpacity)`
   width: ${RFValue(39)}px;
   height: ${RFValue(39)}px;
   background-color: ${({ theme }) => theme.colors.primary};

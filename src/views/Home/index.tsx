@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios'; 
 import { ActivityIndicator, Alert, View} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios'; 
 
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
 import { 
@@ -23,17 +23,20 @@ export interface CharactereCardProps extends CharacteresProps{};
 
 export default function Home(){
 
-  const nevigation = useNavigation(); 
+  const navigation = useNavigation(); 
 
   const [characters, setCharacters] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
   const [loading, setLoading] = useState(false); 
   const [loadingApi, setLoadingApi] = useState(true); 
-
   const [ searchName, setSearchName] = useState(''); 
 
-  function handleStart(pagCharacters: CharactereCardProps){
-    nevigation.navigate('Personagens', {pagCharacters})
+  function handleSelectedCharacterPage(pagCharacters: CharactereCardProps){
+    navigation.navigate('Characters', {pagCharacters})
+  }
+
+  function handleOpenFavoritesPage(pagCharacters: CharactereCardProps){
+    navigation.navigate('Favorites')
   }
 
   async function fetchCharacters(){
@@ -82,7 +85,9 @@ export default function Home(){
     <Container>
       <Header>
         <Title>Rick and Morty</Title>
-        <FavoriteButton>
+        <FavoriteButton
+          onPress={handleOpenFavoritesPage}
+        >
           <IconFavorite name="star"/>
         </FavoriteButton>
       </Header>
@@ -98,7 +103,7 @@ export default function Home(){
             <IconSearch name="search" />
           </InputButton>
         </InputContainer>
-        <Subtitle>Personagens</Subtitle>
+        <Subtitle>Characters</Subtitle>
 
         <CharacteresList
           columnWrapperStyle={{
@@ -116,7 +121,7 @@ export default function Home(){
               <CharactereCard 
                 key={item.id.toString()} 
                 data={item}
-                onPress={() => handleStart(item)}
+                onPress={() => handleSelectedCharacterPage(item)}
               />
             )}
           numColumns={2} 
@@ -128,7 +133,7 @@ export default function Home(){
             <ActivityIndicator color={'green'}/>
             : <></>  
           }
-      />
+        />
     </Container>
   )
 }
