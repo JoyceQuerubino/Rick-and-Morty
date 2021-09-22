@@ -57,7 +57,7 @@ export default function Favorites(){
             return convertStringValue
 
         } else {
-            console.log('Esse valor já existe no array')
+            console.log('ENTROU AQUIIIIIIIII')
         }
     }
 
@@ -68,8 +68,11 @@ export default function Favorites(){
       
               if(!resultdata)
                 return console.log('não tem dado')
-    
-              setCharacters([...characters, ...resultdata])
+            
+            if(resultdata.length > 1)
+                setCharacters([...characters, ...resultdata])
+            else 
+                setCharacters(oldState => [ ...oldState, resultdata ])
     
         } catch(error){
             console.log(error)
@@ -106,7 +109,6 @@ export default function Favorites(){
                     updateCellsBatchingPeriod={50}
                     renderItem={({item, index}) => (
                         <CharactereCard 
-                            key={item.id.toString()} 
                             data={item}
                             onPress={() => handleSelectedCharacterPage(item)}
                         />
