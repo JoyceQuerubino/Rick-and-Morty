@@ -2,10 +2,11 @@ export default {
     colors: {
         primary: '#63D477', 
         secondary: '#403F3F',
-        tertiary: '#313131', 
-        background: '#1D1C1C',
+        tertiary: '#302F2F', 
+        background: '#101010',
         text: '#FFFFFF', 
         dark_text: '#2E2E2E', 
+        section: '#464646', 
     }, 
 
     fonts: {
