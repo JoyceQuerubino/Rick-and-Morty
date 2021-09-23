@@ -57,7 +57,6 @@ export default function Character(){
     let convertStringValue = ''; 
 
     async function getIdArrayCharacters(){
-        console.log('verificou se existe dados salvos no arrey de ID')
         const response = await AsyncStorage.getItem('@rickmorty:idArray'); 
         if(response !== null){
             console.log('Possuí o array de ids salvos')
@@ -65,9 +64,20 @@ export default function Character(){
         }
     }
 
+    async function getIButtonFavoriteAsyncStorage(){
+        const response = await AsyncStorage.getItem('@rickmorty:buttonFavorite'); 
+        if(response !== null){
+            let convertBoolean = response.toLowerCase() == 'true';
+            setBtnFavoriteStatus(convertBoolean); 
+        }
+    }
+
     async function setIdArrayCharacterAsyncStorage(idList: string){
         await AsyncStorage.setItem('@rickmorty:idArray', idList); 
-        console.log('Valor convertido salvo no dispositivo')
+    }
+
+    async function setButtonFavoriteAsyncStorage(buttonFavorite: string){
+        await AsyncStorage.setItem('@rickmorty:buttonFavorite', buttonFavorite); 
     }
 
     function setIdCharacter(id: number){
@@ -76,12 +86,17 @@ export default function Character(){
         if(!idConvertedToArray.includes(id)){
             
             idConvertedToArray.push(id)
-            const removervaloresiguais = [ ...new Set( idConvertedToArray ) ];
-            convertStringValue = removervaloresiguais.toString();
+            const removeRepeatedValues = [ ...new Set( idConvertedToArray ) ];
+            
+            //Remover o valor 0, apenas na primeira inclusão do array
+            if(removeRepeatedValues.includes(0)){
+                removeRepeatedValues.splice(removeRepeatedValues.indexOf(0), 1);
+            }
+
+            convertStringValue = removeRepeatedValues.toString();
             setIdArrayCharacterAsyncStorage(convertStringValue); 
 
         } else {
-
             idConvertedToArray.splice(idConvertedToArray.indexOf(id), 1);
             convertStringValue = idConvertedToArray.toString();
             setIdArrayCharacterAsyncStorage(convertStringValue); 
@@ -120,13 +135,22 @@ export default function Character(){
     }
 
     function handleFavoriteCharacter(){ 
-        setBtnFavoriteStatus(!btnFavoriteStatus)
+
+        if(btnFavoriteStatus){
+            setBtnFavoriteStatus(false)
+            AsyncStorage.removeItem('userId');
+        } else {
+            setBtnFavoriteStatus(true)
+            setButtonFavoriteAsyncStorage('true')
+        }
+
         const characterId = pagCharacters.id; 
         setIdCharacter(characterId)
     }
 
     useEffect(() => {
         getIdArrayCharacters(); 
+        getIButtonFavoriteAsyncStorage(); 
     }, [])
 
     useEffect(() => {
