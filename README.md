@@ -12,17 +12,17 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-63D477">
 </p>
 
-![Capa](https://user-images.githubusercontent.com/66806696/134522332-4409a384-d920-4424-9515-120806ea59c0.png)
+![Capa](https://user-images.githubusercontent.com/66806696/134559799-5c8ce36b-031d-48a1-bfb8-9616dfe9e317.png)
 
-O objetivo dessa aplicação é forncer um guia sobre o desenho 'Rick and Morty' lançada em 2013, pela Adult Swim, que acompanha as malucas viagens no tempo-espaço e por universos paralelos de Rick, um cientista com problemas com a bebida, e seu neto Morty, um adolescente não tão brilhante quanto o avô.
+O objetivo dessa aplicação é fornecer um guia sobre o desenho 'Rick and Morty' lançado em 2013, pela Adult Swim, que acompanha as malucas viagens no tempo-espaço e por universos paralelos de Rick, um cientista com problemas com a bebida, e seu neto Morty, um adolescente não tão brilhante quanto o avô.
 
-Eu criei em Design completo da aplicação, pode ver no Figma, clicando no **[link](https://www.figma.com/file/faLAafFFNoi1vx8JbcgD7F/App-Rick-and-Morty?node-id=0%3A1)**, mas vale ressaltar que algumas páginas foram modificadas conforme o desenvolvimento.
+Eu criei um Design completo da aplicação através do Figma, e clicando no **[link](https://www.figma.com/file/faLAafFFNoi1vx8JbcgD7F/App-Rick-and-Morty?node-id=0%3A1)** é possível ver o projeto, mas vale ressaltar que algumas páginas foram modificadas conforme o desenvolvimento.
 
 ![Design](https://user-images.githubusercontent.com/66806696/134522584-ffe942df-c242-4282-ac66-fdc656ae3a9e.png)
 
 ## Como a aplicação funciona?
 
-O app deve apresentar todos os personagens da série e permitir um filtro por nome, além disso o usuário pode favoritar os personagens e clicando em um específico devem aparecer as informações como: nome, localização e lista de episódios em que ele aparece.
+O app deve apresentar todos os personagens da série e permitir um filtro por nome, além disso o usuário pode favoritar os personagens, e clicando em um específico, devem aparecer as informações como: nome, localização e lista de episódios em que ele aparece.
 
 ## Funcionalidades?
 
