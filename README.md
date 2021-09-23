@@ -12,13 +12,11 @@
   <img alt="License" src="https://img.shields.io/badge/license-MIT-63D477">
 </p>
 
-![capa](https://user-images.githubusercontent.com/66806696/133014639-08d77d8a-0626-4c9a-af6e-d0dfefcd9b48.png)
+![Capa](https://user-images.githubusercontent.com/66806696/134522332-4409a384-d920-4424-9515-120806ea59c0.png)
 
 O objetivo dessa aplicação é forncer um guia sobre o desenho 'Rick and Morty' lançada em 2013, pela Adult Swim, que acompanha as malucas viagens no tempo-espaço e por universos paralelos de Rick, um cientista com problemas com a bebida, e seu neto Morty, um adolescente não tão brilhante quanto o avô.
 
 Eu criei em Design completo da aplicação, pode ver no Figma, clicando no **[link](https://www.figma.com/file/faLAafFFNoi1vx8JbcgD7F/App-Rick-and-Morty?node-id=0%3A1)**, mas vale ressaltar que algumas páginas foram modificadas conforme o desenvolvimento.
-
-![image](https://user-images.githubusercontent.com/66806696/133016194-8c64cdb0-2772-40ea-b832-46f35e0472ce.png)
 
 ## Como a aplicação funciona?
 
