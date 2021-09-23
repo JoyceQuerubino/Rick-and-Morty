@@ -18,6 +18,8 @@ O objetivo dessa aplicação é forncer um guia sobre o desenho 'Rick and Morty'
 
 Eu criei em Design completo da aplicação, pode ver no Figma, clicando no **[link](https://www.figma.com/file/faLAafFFNoi1vx8JbcgD7F/App-Rick-and-Morty?node-id=0%3A1)**, mas vale ressaltar que algumas páginas foram modificadas conforme o desenvolvimento.
 
+![Design](https://user-images.githubusercontent.com/66806696/134522584-ffe942df-c242-4282-ac66-fdc656ae3a9e.png)
+
 ## Como a aplicação funciona?
 
 O app deve apresentar todos os personagens da série e permitir um filtro por nome, além disso o usuário pode favoritar os personagens e clicando em um específico devem aparecer as informações como: nome, localização e lista de episódios em que ele aparece.
