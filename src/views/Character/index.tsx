@@ -25,7 +25,7 @@ import { BtnReturn } from '../../components/BtnReturn';
 
 interface Params {
     pagCharacters: { 
-        id: string,
+        id: number,
         name: string,
         image: string,
         status: string;
@@ -39,7 +39,7 @@ interface Params {
 }
 
 interface EpisodeType {
-    id: string, 
+    id: number, 
     name: string, 
     episode: string
 }
@@ -52,6 +52,54 @@ export default function Character(){
     
     const [btnFavoriteStatus, setBtnFavoriteStatus] = useState(false); 
     const [episode, setEpisode] = useState<EpisodeType[]>([]); 
+
+    const [valorinicial, setvalorInicial] = useState(''); 
+
+    let convertStringValue = ''; 
+
+
+    async function getIdArrayCharacters(){
+        console.log('verificou se existe dados salvos no arrey de ID')
+        const response = await AsyncStorage.getItem('@rickmorty:idArray'); 
+        if(response !== null){
+            console.log('Possuí o array de ids salvos')
+            setvalorInicial(response); 
+        }
+    }
+
+    async function setIdArrayCharacterAsyncStorage(valor){
+        await AsyncStorage.setItem('@rickmorty:idArray', valor); 
+        console.log('Valor convertido salvo no dispositivo')
+    }
+
+    function setIdCharacter(id: number){
+        console.log(`Valor inicial que vem abaixo: ${valorinicial}`) 
+
+        var ConvertervaloresEmArrey = valorinicial.split(',').map(Number); 
+
+        if(!ConvertervaloresEmArrey.includes(id)){
+            ConvertervaloresEmArrey.push(id)
+            console.log(ConvertervaloresEmArrey);
+    
+            const removervaloresiguais = [ ...new Set( ConvertervaloresEmArrey ) ];
+    
+            convertStringValue = removervaloresiguais.toString();
+    
+            setIdArrayCharacterAsyncStorage(convertStringValue); 
+
+            console.log(`O array é esse aqui: ${convertStringValue}`)
+        } else {
+            ConvertervaloresEmArrey.splice(ConvertervaloresEmArrey.indexOf(id), 1);
+
+            convertStringValue = ConvertervaloresEmArrey.toString();
+            
+            console.log(`O valor foi removido com sucesso, o array agora é: ${ConvertervaloresEmArrey}`);
+
+            console.log(`A string agora é: ${convertStringValue}`);
+            
+            setIdArrayCharacterAsyncStorage(convertStringValue); 
+        }
+    }
 
     function handleEpisodes(){
         
@@ -89,14 +137,13 @@ export default function Character(){
         setBtnFavoriteStatus(!btnFavoriteStatus)
 
         const characterId = pagCharacters.id; 
-        const convertedIdToString = characterId.toString();
+        setIdCharacter(characterId)
 
-        async function setCharacterIdForAsyncStorage(){
-            await AsyncStorage.setItem('@rickmorty:id', convertedIdToString); 
-            console.log('Valor salvo')
-        }
-        setCharacterIdForAsyncStorage(); 
     }
+
+    useEffect(() => {
+        getIdArrayCharacters(); 
+    }, [])
 
     useEffect(() => {
         handleEpisodes(); 
