@@ -55,10 +55,9 @@ export const Description = styled.View`
   background-color: ${({ theme }) => theme.colors.tertiary};
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
-  height: 100%; 
-  /* min-height:${RFValue(400)}px; */
+  height: 100%;
+  min-height:${RFValue(400)}px;
   margin-top: 8px;
-  flex: 1;
   padding: 24px; 
 `
 
