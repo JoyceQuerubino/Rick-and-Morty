@@ -1,21 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import { ActivityIndicator, Alert, View} from 'react-native';
+import { ActivityIndicator} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios'; 
 
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
 import { 
+  CharacteresList,
   Container, 
-  Header,
-  Title,
   FavoriteButton, 
+  Header,
   IconFavorite,
-  InputContainer,
-  Input,
-  InputButton, 
   IconSearch, 
+  Input,
+  InputContainer,
   Subtitle, 
-  CharacteresList
+  Title,
  } from './styles';
 import { Loading } from '../../components/Loading';
 
@@ -23,7 +22,7 @@ export interface CharactereCardProps extends CharacteresProps{};
 
 export default function Home(){
 
-  const navigation = useNavigation(); 
+  const navigation = useNavigation<any>(); 
 
   const [characters, setCharacters] = useState<CharactereCardProps[]>([]); 
   const [page, setPage] = useState(1); 
@@ -35,7 +34,7 @@ export default function Home(){
     navigation.navigate('Characters', {pagCharacters})
   }
 
-  function handleOpenFavoritesPage(pagCharacters: CharactereCardProps){
+  function handleOpenFavoritesPage(){
     navigation.navigate('Favorites')
   }
 
@@ -98,10 +97,7 @@ export default function Home(){
             placeholderTextColor="#7A7A7A" 
             onChangeText={handleInputChange}
           />
-          <InputButton
-          >
-            <IconSearch name="search" />
-          </InputButton>
+          <IconSearch name="search" />
         </InputContainer>
         <Subtitle>Characters</Subtitle>
 

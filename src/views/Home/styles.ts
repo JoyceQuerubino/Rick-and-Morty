@@ -48,24 +48,14 @@ export const InputContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   margin-top: 24px;
+  padding: 8px 24px;
   width: 100%;
 `;
 
 export const Input = styled.TextInput`
   color: ${({ theme }) => theme.colors.text};
-  margin: 0 14px;
 `;
 
-export const InputButton = styled.TouchableOpacity`
-  align-items: center;
-  background-color: ${({ theme }) => theme.colors.primary};
-  border-bottom-right-radius: 12px;
-  border-top-right-radius: 12px;
-  height: ${RFValue(42)}px;
-  justify-content: center;
-  width: ${RFValue(42)}px;
- 
-`;
 export const IconSearch = styled(FontAwesome)`
   color: ${({ theme }) => theme.colors.text};
   font-size: ${RFValue(18)}px;
