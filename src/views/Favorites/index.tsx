@@ -4,11 +4,12 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 
 import { 
-    Container, 
-    Title,
-    Content,
     CharacteresList,
+    Container, 
+    Content,
+    Title,
    } from './styles';
+
 import { BtnReturn } from '../../components/BtnReturn';
 import { CharactereCard, CharacteresProps } from '../../components/CharactereCard';  
 
@@ -16,48 +17,17 @@ export interface CharactereCardProps extends CharacteresProps{};
 
 export default function Favorites(){
 
-    const navigation = useNavigation(); 
+    const navigation = useNavigation<any>(); 
     const [characters, setCharacters] = useState<CharactereCardProps[]>([]); 
-    let arrayFavorites: Array<string> = [];
+    
     let convertStringValue = ''; 
 
     async function getIdArrayCharacters(){
         const response = await AsyncStorage.getItem('@rickmorty:idArray'); 
         if(response !== null){
             console.log('Possuí o array de ids salvos')
-            setIdCharacter(response);
-        }
-    }
-
-    async function getIdCharacter(){
-        const response = await AsyncStorage.getItem('@rickmorty:id'); 
-        if(response !== null){
-            console.log('Possuí id salvo')
-            setIdCharacter(response);
-        }
-    }
-
-    function setIdCharacter(id: string){
-        const validacao = arrayFavorites.filter( valor => valor === id)
-
-        if(validacao.length == 0){
-            arrayFavorites.push(id)
-
-            convertStringValue = arrayFavorites.toString();
-            async function setIdArrayCharacterAsyncStorage(){
-                await AsyncStorage.setItem('@rickmorty:idArray', convertStringValue); 
-                console.log('Valor convertido salvo')
-            }
-        
-            setIdArrayCharacterAsyncStorage(); 
-            console.log(`O array é esse aqui ${convertStringValue}`)
-
+            convertStringValue = response; 
             fetchFavoritesCharacters(); 
-
-            return convertStringValue
-
-        } else {
-            console.log('ENTROU AQUIIIIIIIII')
         }
     }
 
@@ -84,7 +54,6 @@ export default function Favorites(){
     }
 
     useEffect(() => {
-        getIdCharacter();
         getIdArrayCharacters(); 
     }, [])
 
@@ -107,7 +76,7 @@ export default function Favorites(){
                     initialNumToRender={4}
                     maxToRenderPerBatch={8}
                     updateCellsBatchingPeriod={50}
-                    renderItem={({item, index}) => (
+                    renderItem={({item }) => (
                         <CharactereCard 
                             data={item}
                             onPress={() => handleSelectedCharacterPage(item)}
