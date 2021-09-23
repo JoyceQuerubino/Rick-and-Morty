@@ -50,53 +50,40 @@ export default function Character(){
     const route = useRoute(); 
     const { pagCharacters} = route.params as Params; 
     
-    const [btnFavoriteStatus, setBtnFavoriteStatus] = useState(false); 
     const [episode, setEpisode] = useState<EpisodeType[]>([]); 
-
-    const [valorinicial, setvalorInicial] = useState(''); 
+    const [btnFavoriteStatus, setBtnFavoriteStatus] = useState(false); 
+    const [charactersIdAsyncStorageList, setCharactersIdAsyncStorageList] = useState(''); 
 
     let convertStringValue = ''; 
-
 
     async function getIdArrayCharacters(){
         console.log('verificou se existe dados salvos no arrey de ID')
         const response = await AsyncStorage.getItem('@rickmorty:idArray'); 
         if(response !== null){
             console.log('Possuí o array de ids salvos')
-            setvalorInicial(response); 
+            setCharactersIdAsyncStorageList(response); 
         }
     }
 
-    async function setIdArrayCharacterAsyncStorage(valor){
-        await AsyncStorage.setItem('@rickmorty:idArray', valor); 
+    async function setIdArrayCharacterAsyncStorage(idList: string){
+        await AsyncStorage.setItem('@rickmorty:idArray', idList); 
         console.log('Valor convertido salvo no dispositivo')
     }
 
     function setIdCharacter(id: number){
-        console.log(`Valor inicial que vem abaixo: ${valorinicial}`) 
+        var idConvertedToArray = charactersIdAsyncStorageList.split(',').map(Number); 
 
-        var ConvertervaloresEmArrey = valorinicial.split(',').map(Number); 
-
-        if(!ConvertervaloresEmArrey.includes(id)){
-            ConvertervaloresEmArrey.push(id)
-            console.log(ConvertervaloresEmArrey);
-    
-            const removervaloresiguais = [ ...new Set( ConvertervaloresEmArrey ) ];
-    
+        if(!idConvertedToArray.includes(id)){
+            
+            idConvertedToArray.push(id)
+            const removervaloresiguais = [ ...new Set( idConvertedToArray ) ];
             convertStringValue = removervaloresiguais.toString();
-    
             setIdArrayCharacterAsyncStorage(convertStringValue); 
 
-            console.log(`O array é esse aqui: ${convertStringValue}`)
         } else {
-            ConvertervaloresEmArrey.splice(ConvertervaloresEmArrey.indexOf(id), 1);
 
-            convertStringValue = ConvertervaloresEmArrey.toString();
-            
-            console.log(`O valor foi removido com sucesso, o array agora é: ${ConvertervaloresEmArrey}`);
-
-            console.log(`A string agora é: ${convertStringValue}`);
-            
+            idConvertedToArray.splice(idConvertedToArray.indexOf(id), 1);
+            convertStringValue = idConvertedToArray.toString();
             setIdArrayCharacterAsyncStorage(convertStringValue); 
         }
     }
@@ -121,7 +108,6 @@ export default function Character(){
                         setEpisode([...episode, ...resultdata])
                     else 
                         setEpisode(oldState => [ ...oldState, resultdata ])
-        
             } catch(error){
                 console.log(error)
             }
@@ -135,10 +121,8 @@ export default function Character(){
 
     function handleFavoriteCharacter(){ 
         setBtnFavoriteStatus(!btnFavoriteStatus)
-
         const characterId = pagCharacters.id; 
         setIdCharacter(characterId)
-
     }
 
     useEffect(() => {
@@ -169,7 +153,6 @@ export default function Character(){
                             (<IconFavorite name='star'/>) : 
                             (<IconFavorite name='staro'/>)
                         }
-                        
                     </BtnFavorite>
                 </FavoriteContainer>
             </Header>
