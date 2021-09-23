@@ -23,11 +23,13 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#101010"
-      }
+      },
+      "package": "com.joycequerubino.basedesafiosuperlogica"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": ""
+    "description": "",
+    "githubUrl": "https://github.com/JoyceQuerubino/desafio-mobile-superlogica"
   }
 }
