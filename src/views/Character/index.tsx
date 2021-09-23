@@ -55,29 +55,26 @@ export default function Character(){
     const [charactersIdAsyncStorageList, setCharactersIdAsyncStorageList] = useState(''); 
 
     let convertStringValue = ''; 
+    let charactersListString = ''; 
 
     async function getIdArrayCharacters(){
         const response = await AsyncStorage.getItem('@rickmorty:idArray'); 
         if(response !== null){
-            console.log('Possuí o array de ids salvos')
             setCharactersIdAsyncStorageList(response); 
-        }
-    }
 
-    async function getIButtonFavoriteAsyncStorage(){
-        const response = await AsyncStorage.getItem('@rickmorty:buttonFavorite'); 
-        if(response !== null){
-            let convertBoolean = response.toLowerCase() == 'true';
-            setBtnFavoriteStatus(convertBoolean); 
+            charactersListString = response; 
+
+            var idConvertedToArray = response.split(',').map(Number); 
+            
+            if(idConvertedToArray.includes(pagCharacters.id))
+                setBtnFavoriteStatus(true)
+            else 
+                setBtnFavoriteStatus(false)
         }
     }
 
     async function setIdArrayCharacterAsyncStorage(idList: string){
         await AsyncStorage.setItem('@rickmorty:idArray', idList); 
-    }
-
-    async function setButtonFavoriteAsyncStorage(buttonFavorite: string){
-        await AsyncStorage.setItem('@rickmorty:buttonFavorite', buttonFavorite); 
     }
 
     function setIdCharacter(id: number){
@@ -135,22 +132,13 @@ export default function Character(){
     }
 
     function handleFavoriteCharacter(){ 
-
-        if(btnFavoriteStatus){
-            setBtnFavoriteStatus(false)
-            AsyncStorage.removeItem('userId');
-        } else {
-            setBtnFavoriteStatus(true)
-            setButtonFavoriteAsyncStorage('true')
-        }
-
+        setBtnFavoriteStatus(!btnFavoriteStatus)
         const characterId = pagCharacters.id; 
         setIdCharacter(characterId)
     }
 
     useEffect(() => {
         getIdArrayCharacters(); 
-        getIButtonFavoriteAsyncStorage(); 
     }, [])
 
     useEffect(() => {
