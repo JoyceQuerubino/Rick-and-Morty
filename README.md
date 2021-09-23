@@ -71,6 +71,7 @@ expo start
 Para usar a aplicação
 - Baixe o aplicativo 'Expo Go' no seu celular
 - Clique em 'Scan QR Code' para escanear o código abaixo
+- Ou copie e cole o link abaixo: exp://exp.host/@joycequerubino/base-desafio-superlogica
 
 ```
 
