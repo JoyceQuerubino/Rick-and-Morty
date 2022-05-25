@@ -4232,10 +4232,10 @@ loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.3.1, loose-envify@^1.4
   dependencies:
     js-tokens "^3.0.0 || ^4.0.0"
 
-lottie-react-native@^4.0.3:
-  version "4.0.3"
-  resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-4.0.3.tgz#2a2548b8fb6d30e45b55714ec57e986e4af6fcb0"
-  integrity sha512-cmMt/HEwTTzF3PQcE4VVl7jpBYC9cZD9pGz7ZLxYV13e5jWBvMCFKsQYHlYAo69fjXZ2YCum1AqEuez6kSbmCA==
+lottie-react-native@4.0.2:
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/lottie-react-native/-/lottie-react-native-4.0.2.tgz#d0b7a479995b4bfdf5402671e096f15b7ef2a7d8"
+  integrity sha512-8X5SV8X+es5dJwUGYcSyRIbHIPeWIcUH6PiRaReUEy+6s1d+NLBp3rj4+9I75F1ZN0nbFGNkrgypnGsXOAXBTw==
   dependencies:
     invariant "^2.2.2"
     prop-types "^15.5.10"
