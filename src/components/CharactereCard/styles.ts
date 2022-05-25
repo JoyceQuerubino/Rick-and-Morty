@@ -3,7 +3,7 @@ import { TouchableOpacity} from 'react-native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize'; 
 
 export const Container = styled(TouchableOpacity)`
-    width: ${RFPercentage(22)}px;
+    width: ${RFPercentage(21)}px;
     background-color: ${({ theme }) => theme.colors.secondary};
     align-items: baseline; 
     border-radius: 8px;
@@ -11,7 +11,7 @@ export const Container = styled(TouchableOpacity)`
 `; 
 
 export const Image = styled.Image`
-    width: ${RFPercentage(21.4)}px;
+    width: 100%;
     height: ${RFValue(112)}px;
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
